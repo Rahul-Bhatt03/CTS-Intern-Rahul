@@ -16,14 +16,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\BookRepository::class,
             \App\Repositories\EloquentBookRepository::class
-        )
+        );
 
         $this->app->bind(
             \App\Services\BookService::class,
             function($app){
                 return new \App\Services\BookService($app->make(\App\Repositories\BookRepository::class));
             }
-        )
+        );
     }
 
     /**
