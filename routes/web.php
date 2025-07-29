@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\resources\views;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +15,17 @@ use App\Http\Controllers\BookController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/signin', function () {
+    return view('Auth.signin');
 });
 
-Route::get('/student', function () {
-    return view('student');
+Route::get('/', function () {
+    return view('Employee.home');
 });
+
+// Route::get('/student', function () {
+//     return view('student');
+// });
 
 // Route::get('/book',function(){
 //     return view('book');

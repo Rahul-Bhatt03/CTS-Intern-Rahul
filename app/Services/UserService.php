@@ -43,7 +43,7 @@ public function login(array $credentials):array{
     return [
         'data' => [
             'user' => $user,
-            'access_token' => $token->plainTextToken,
+            'token' => $token->plainTextToken,
             'token_type' => 'Bearer', 
             'expires_in' => 30 * 24 * 60 * 60
         ]
