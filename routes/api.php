@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LunchController;
+use App\Http\Controllers\AttendanceController;
+
 
 // apply cookie middleware to all api routes
 // Route::middleware('cookieAuth')->group(function(){
@@ -40,7 +43,7 @@ Route::prefix('lunch')->group(function () {
 });
 
 // Attendance Routes
-Route::prefix('attendance')->group(function () {
+Route::prefix('attendance')->middleware('auth:sanctum')->group(function () {
     Route::post('/check-in', [AttendanceController::class, 'checkIn']);
     Route::post('/check-out', [AttendanceController::class, 'checkOut']);
     Route::post('/submit', [AttendanceController::class, 'submitAttendance']);

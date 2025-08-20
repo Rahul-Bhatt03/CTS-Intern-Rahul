@@ -1,4 +1,5 @@
-<?>
+<?php 
+
 namespace App\Repositories;
 use App\Models\Attendance;
 use Carbon\Carbon;
@@ -31,7 +32,7 @@ public function getPendingAttendances(){
     return Attendance::with('user')->where('status','pending')->orderBy('date','desc')->paginate(15);
 }
 
-public function getSubmittedAttendance(){
+public function getSubmittedAttendances(){
     return Attendance::with('user')->where('status','submitted')->orderBy('date','desc')->paginate(15);
 }
 

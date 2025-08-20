@@ -23,7 +23,7 @@ class BookRequest extends FormRequest
             'publisher'=>'required|string|min:3|max:255',
             'isbn'=>'required|string|min:3|max:255|unique:books,isbn,'.$this->route('book')->id,
             'description'=>'required|string|min:3|max:255'
-        ]
+        ];
     }
 }
 
