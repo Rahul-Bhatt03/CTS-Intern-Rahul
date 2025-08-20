@@ -25,7 +25,7 @@ class AttendanceService
         return $this->attendanceRepository->createOrUpdateAttendance($userId,$data);
     }
 
-    public function submitAtendance($data){
+    public function submitAttendance($data){
         $userId=Auth::id();
         $data['status']='submitted';
         $data['date']=now()->toDateString();

@@ -15,7 +15,7 @@ class AttendanceController extends Controller
         $this->attendanceService = $attendanceService;
         $this->middleware('auth');
     }
-
+        
     public function checkIn()
     {
         $attendance = $this->attendanceService->checkIn([]);
@@ -42,9 +42,9 @@ class AttendanceController extends Controller
 
     public function getPendingAttendances()
     {
-        if (!auth()->user()->isAdmin()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        // if (!auth()->user()->isAdmin()) {
+        //     return response()->json(['message' => 'Unauthorized'], 403);
+        // }
 
         $attendances = $this->attendanceService->getPendingAttendances();
         return response()->json($attendances);
@@ -52,9 +52,9 @@ class AttendanceController extends Controller
 
     public function getSubmittedAttendances()
     {
-        if (!auth()->user()->isAdmin()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        // if (!auth()->user()->isAdmin()) {
+        //     return response()->json(['message' => 'Unauthorized'], 403);
+        // }
 
         $attendances = $this->attendanceService->getSubmittedAttendances();
         return response()->json($attendances);
@@ -62,9 +62,9 @@ class AttendanceController extends Controller
 
     public function updateAttendanceStatus(Request $request, $id)
     {
-        if (!auth()->user()->isAdmin()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        // if (!auth()->user()->isAdmin()) {
+        //     return response()->json(['message' => 'Unauthorized'], 403);
+        // }
 
         $request->validate(['status' => 'required|in:approved,rejected']);
         
@@ -74,9 +74,9 @@ class AttendanceController extends Controller
 
     public function bulkUpdateStatus(Request $request)
     {
-        if (!auth()->user()->isAdmin()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        // if (!auth()->user()->isAdmin()) {
+        //     return response()->json(['message' => 'Unauthorized'], 403);
+        // }
 
         $request->validate([
             'ids' => 'required|array',

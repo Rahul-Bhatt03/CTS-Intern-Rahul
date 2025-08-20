@@ -68,9 +68,18 @@ class UserController extends Controller
     }
 
     public function logout():JsonResponse{
-        auth()->user()->tokens()-delete();
-        $cookie=cookie(
-         )->forget('auth_token');
-        return response()->json(['message' => 'Successfully logged out'], 200)->cookie($cookie);
+        // auth()->user()->tokens()->delete();
+        // $cookie=cookie(
+        //  )->forget('auth_token');
+        // return response()->json(['message' => 'Successfully logged out'], 200)->cookie($cookie);
+        // check if the user is authenticated before trying to access token 
+        if(auth()->check()){
+          auth()->user()->tokens()->delete();
+        }
+        $cookie=cookie()->forget('auth_token');
+        return response()->json([
+          'success'=>true,
+          'message'=>'successfully logged out'
+        ],200)->cookie($cookie);
     }
 }

@@ -36,4 +36,10 @@ class User extends Authenticatable
     public function attendances(){
         return $this->hasMany(Attendance::class);
     }
+    public function isAdmin() {
+    // // Example - adjust based on your admin checking logic
+    return $this->role === 'admin'; 
+    // // Or if using Laravel's built-in:
+    // return $this->hasRole('admin');
+}
 }
