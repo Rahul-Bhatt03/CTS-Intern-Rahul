@@ -20,11 +20,18 @@ class LunchRepository{
         ]);
     }
 
-    public function getUserLunchRequest($userId ,$data){
+    public function getUserLunchRequest($userId ,$date){
         return LunchRequest::where('user_id',$userId)->whereDate('date',$date)->first();
     }
 
-    public function createOrUpdateLunchRequest($userId, $data,$hasLunch){
+     public function getUserLunchHistory($userId, $startDate, $endDate) {
+        return LunchRequest::where('user_id', $userId)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->orderBy('date', 'desc')
+            ->paginate(15);
+    }
+
+    public function createOrUpdateLunchRequest($userId, $date,$hasLunch){
         return LunchRequest::updateOrCreate(
             ['user_id'=>$userId,'date'=>$date],
             [
@@ -34,16 +41,32 @@ class LunchRepository{
             );
     }
 
-    public function getLunchRequest($status=null){
-        $query=LunchRequest::with('user')->orderBy('date','desc');
-        if($status){
-            $query->where('status','=',$status);
+    public function getLunchRequest($status = null, $date = null, $userId = null) {
+        $query = LunchRequest::with('user')->orderBy('date', 'desc');
+        
+        if ($status) {
+            $query->where('status', $status);
         }
+        
+        if ($date) {
+            $query->whereDate('date', $date);
+        }
+        
+        if ($userId) {
+            $query->where('user_id', $userId);
+        }
+        
         return $query->paginate(15);
     }
 
-    public function updateLunchRequestStatus($id,$status){
-        return LunchRequest::where('id','=',$id)->update(['status'=>$status]);
+     public function updateLunchRequestStatus($id, $status) {
+        return LunchRequest::where('id', $id)->update(['status' => $status]);
+    }
+
+    public function deleteLunchRequest($id, $userId) {
+        return LunchRequest::where('id', $id)
+            ->where('user_id', $userId)
+            ->delete();
     }
 }
 
