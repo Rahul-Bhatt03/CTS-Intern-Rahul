@@ -28,15 +28,20 @@ Route::prefix('auth')->group(function(){
 });
 // });
 
-// Lunch Routes
-Route::prefix('lunch')->group(function () {
+// Lunch Routes (All require authentication)
+Route::prefix('lunch')->middleware('auth:sanctum')->group(function () {
+    // Public settings (can be viewed by all authenticated users)
     Route::get('/settings', [LunchController::class, 'getSettings']);
-    Route::post('/settings', [LunchController::class, 'updateSettings'])->middleware('admin');
+    
+    // User lunch request routes
     Route::post('/request', [LunchController::class, 'submitLunchRequest']);
     Route::get('/my-request', [LunchController::class, 'getUserLunchRequest']);
+    Route::get('/my-history', [LunchController::class, 'getUserLunchHistory']);
+    Route::delete('/request/{id}', [LunchController::class, 'deleteLunchRequest']);
     
-    // Admin only
+    // Admin only routes
     Route::middleware('admin')->group(function () {
+        Route::post('/settings', [LunchController::class, 'updateSettings']);
         Route::get('/requests', [LunchController::class, 'getRequests']);
         Route::put('/request/{id}/status', [LunchController::class, 'updateRequestStatus']);
     });

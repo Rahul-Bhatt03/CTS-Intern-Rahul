@@ -19,5 +19,5 @@ class LunchSetting extends Model
         'start_time'=>'datetime:H:i',
         'end_time'=>'datetime:H:i',
         'is_active'=>'boolean'
-    ]
+    ];
 }
