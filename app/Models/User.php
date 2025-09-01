@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable
 {
-    use HasFactory,Notifiable,HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens;
 
     protected $fillable = [
         'name',
@@ -29,17 +29,33 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function lunchRequests(){
+    public function lunchRequests()
+    {
         return $this->hasMany(LunchRequest::class);
     }
 
-    public function attendances(){
+    public function attendances()
+    {
         return $this->hasMany(Attendance::class);
     }
-    public function isAdmin() {
-    // // Example - adjust based on your admin checking logic
-    return $this->role === 'admin'; 
-    // // Or if using Laravel's built-in:
-    // return $this->hasRole('admin');
-}
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class);
+    }
+    public function workSchedules()
+    {
+        return $this->hasMany(WorkSchedule::class);
+    }
+    public function getScheduleForDay($dayOfWeek)
+    {
+
+        return $this->workSchedules()
+            ->where('day_of_week', strtolower($dayOfWeek))
+            ->where('is_active', true)
+            ->first();
+    }
 }

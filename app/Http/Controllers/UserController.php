@@ -32,7 +32,7 @@ class UserController extends Controller
             'success' => true,
             'message' => 'User registered successfully',
             'data' => $result['data']
-        ], 201)->cookie($cookie);
+        ], 200)->cookie($cookie);
       }catch(\Exception $e){
             return response()->json([
             'success' => false,
